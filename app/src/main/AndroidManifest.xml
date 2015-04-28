@@ -16,6 +16,19 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        
+        <activity android:name=".TopicOverview"
+        android:label="Topic Overview">
+    </activity>
+
+        <activity android:name=".QuestionActivity"
+            android:label="Question Activity">
+        </activity>
+
+        <activity android:name=".AnswerActivity"
+            android:label="Answer Activity">
+        </activity>
     </application>
+
 
 </manifest>

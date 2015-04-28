@@ -8,41 +8,52 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import java.util.List;
 
 
-public class MainActivity extends ActionBarActivity {
-
-    private String[] quizTopics = {"Math", "Physics", "Marvel Super Heroes"};
-    private String[] quizDescription = {"Worst topic of all time", "Find out how close you compare to Albert",
-                                        "Find out how much you know about Marvel\'s own superheroes"};
-    private ListView topicList;
-
+public class TopicOverview extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_overview);
 
-        // Finds the topic list view
-        topicList = (ListView) findViewById(R.id.quizView);
+        // Gets topic/description/questions from previous page
+        String topicName = getIntent().getStringExtra("topic");
+        String topicDescription = getIntent().getStringExtra("description");
+        final int position = getIntent().getIntExtra("position", 0);
 
-        // Populates the topic list view with stored quiz topics
-        ArrayAdapter<String> items = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, quizTopics);
-        topicList.setAdapter(items);
+        // Gets views for description, topic, question
+        TextView topicView = (TextView) findViewById(R.id.topic);
+        TextView description = (TextView) findViewById(R.id.description);
+        TextView questionView = (TextView)findViewById(R.id.questionCount);
 
-        // Begins the quiz as soon as the user clicks on a topic
-        topicList.setOnItemClickListener(new ListView.OnItemClickListener() {
+        // Sets text for views
+        topicView.setText(topicName);
+        description.setText(topicDescription);
+
+        String[][] questions = Question.getQuestionsForPosition(position);
+
+        questionView.setText("There are " + questions.length + " questions");
+
+
+        Button beginButton = (Button) findViewById(R.id.beginButton);
+
+        beginButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent i = new Intent(MainActivity.this, TopicOverview.class);
-                i.putExtra("topic", quizTopics[position]);
-                i.putExtra("description", quizDescription[position]);
+            public void onClick(View view) {
+                Intent i = new Intent(TopicOverview.this, QuestionActivity.class);
                 i.putExtra("position", position);
                 startActivity(i);
             }
         });
 
     }
+
 
 
     @Override
