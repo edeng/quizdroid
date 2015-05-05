@@ -34,7 +34,7 @@ public class MainActivity extends ActionBarActivity {
         topicList.setOnItemClickListener(new ListView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent i = new Intent(MainActivity.this, TopicOverview.class);
+                Intent i = new Intent(MainActivity.this, GameplayActivity.class);
                 i.putExtra("topic", quizTopics[position]);
                 i.putExtra("description", quizDescription[position]);
                 i.putExtra("position", position);

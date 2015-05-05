@@ -32,9 +32,10 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Correct Answer:"
         android:id="@+id/correctTitle"
-        android:textSize="40dp"
+        android:textSize="30dp"
         android:textColor="#006400"
-        android:layout_above="@+id/correctAnswer"
+        android:layout_marginTop="49dp"
+        android:layout_below="@+id/userAnswer"
         android:layout_centerHorizontal="true" />
 
     <TextView
@@ -43,10 +44,11 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="The Correct Answer"
         android:id="@+id/correctAnswer"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"
         android:textSize="30dp"
-        android:textColor="#006400" />
+        android:textColor="#006400"
+        android:layout_below="@+id/correctTitle"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="38dp" />
 
     <Button
         android:layout_width="wrap_content"
