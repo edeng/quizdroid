@@ -36,7 +36,8 @@ public class MainActivity extends ActionBarActivity {
         topicList = (ListView) findViewById(R.id.quizView);
 
         // Populates the topic list view with stored quiz topics
-        ArrayAdapter<String> items = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, quizTopics);
+        //ArrayAdapter<String> items = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, quizTopics);
+        ArrayAdapter<String> items = new IconArrayAdapter(this, quizTopics);
         topicList.setAdapter(items);
 
         // Begins the quiz as soon as the user clicks on a topic
