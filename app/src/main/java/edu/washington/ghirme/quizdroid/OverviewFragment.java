@@ -10,9 +10,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 public class OverviewFragment extends Fragment {
-    private String topic;
-    private String description;
-    private int position;
+    private Topic topic;
     private Activity hostActivity;
 
     public OverviewFragment() {
@@ -28,9 +26,7 @@ public class OverviewFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         if (getArguments() != null) {
-            topic = getArguments().getString("topicName");
-            description = getArguments().getString("topicDescription");
-            position = getArguments().getInt("position");
+            topic = (Topic) getArguments().getSerializable("topic");
         }
     }
 
@@ -45,12 +41,10 @@ public class OverviewFragment extends Fragment {
         TextView questionView = (TextView) rootView.findViewById(R.id.questionCount);
 
         // Sets text for views
-        topicView.setText(topic);
-        descriptionView.setText(description);
+        topicView.setText(topic.getTitle());
+        descriptionView.setText(topic.getDescription());
 
-        String[][] questions = Question.getQuestionsForPosition(position);
-
-        questionView.setText("There are " + questions.length + " questions");
+        questionView.setText("There are " + topic.getQuestions().size() + " questions");
 
 
         Button beginButton = (Button) rootView.findViewById(R.id.beginButton);
@@ -59,7 +53,7 @@ public class OverviewFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 if (hostActivity instanceof GameplayActivity) {
-                    ((GameplayActivity) hostActivity).loadQuestionFrag(0, 0, position);
+                    ((GameplayActivity) hostActivity).loadQuestionFrag(0, 0, topic);
                 }
             }
         });

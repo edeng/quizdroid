@@ -3,6 +3,7 @@ package edu.washington.ghirme.quizdroid;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -10,18 +11,26 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.List;
+
 
 public class MainActivity extends ActionBarActivity {
-
-    private String[] quizTopics = {"Math", "Physics", "Marvel Super Heroes"};
-    private String[] quizDescription = {"Worst topic of all time", "Find out how close you compare to Albert",
-                                        "Find out how much you know about Marvel\'s own superheroes"};
     private ListView topicList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        QuizApp app = (QuizApp) getApplication();
+        final List<Topic> topics = app.getAllTopics();
+
+        String[] quizTopics = new String[topics.size()];
+        for (int i = 0; i < topics.size(); i++) {
+            quizTopics[i] = topics.get(i).getTitle();
+        }
 
         // Finds the topic list view
         topicList = (ListView) findViewById(R.id.quizView);
@@ -35,13 +44,12 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent i = new Intent(MainActivity.this, GameplayActivity.class);
-                i.putExtra("topic", quizTopics[position]);
-                i.putExtra("description", quizDescription[position]);
-                i.putExtra("position", position);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("topic", topics.get(position));
+                i.putExtras(bundle);
                 startActivity(i);
             }
         });
-
     }
 
 

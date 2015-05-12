@@ -11,8 +11,10 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import java.util.List;
+
 public class QuestionFragment extends Fragment {
-    private int position;
+    private Topic topic;
     private int questionNumber;
     private int correctAnswers;
     private Activity hostActivity;
@@ -26,7 +28,7 @@ public class QuestionFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         if (getArguments() != null) {
-            position = getArguments().getInt("position");
+            topic = (Topic) getArguments().getSerializable("topic");
             questionNumber = getArguments().getInt("questionNumber");
             correctAnswers = getArguments().getInt("correctAnswers");
         }
@@ -55,12 +57,26 @@ public class QuestionFragment extends Fragment {
         });
 
         // populates views with question and answer options
-        final String[] curQuestion = Question.getQuestionForPositionAndQuestion(position, questionNumber);
-        question.setText(curQuestion[0]);
-        answer1.setText(curQuestion[1]);
-        answer2.setText(curQuestion[2]);
-        answer3.setText(curQuestion[3]);
-        answer4.setText(curQuestion[4]);
+        final Quiz curQuestion = topic.getQuestions().get(questionNumber);
+        question.setText(curQuestion.getText());
+        answer1.setText(curQuestion.getAnswer1());
+        answer2.setText(curQuestion.getAnswer2());
+        answer3.setText(curQuestion.getAnswer3());
+        answer4.setText(curQuestion.getAnswer4());
+
+        String answer = "";
+        switch(curQuestion.getCorrectAnswer()) {
+            case 1: answer = curQuestion.getAnswer1();
+                    break;
+            case 2: answer = curQuestion.getAnswer2();
+                    break;
+            case 3: answer = curQuestion.getAnswer3();
+                    break;
+            case 4: answer = curQuestion.getAnswer4();
+                    break;
+        }
+
+        final String correctAnswer = answer;
 
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,12 +84,12 @@ public class QuestionFragment extends Fragment {
                 // gets selected button and determines if the answer was correct
                 int selectedId = radioGroup.getCheckedRadioButtonId();
                 RadioButton selected = (RadioButton) rootView.findViewById(selectedId);
-                boolean correct = selected.getText().equals(curQuestion[5]);
+                boolean correct = selected.getText().equals(correctAnswer);
                 final int correctAddition = correct ? 1 : 0;
 
                 if (hostActivity instanceof GameplayActivity) {
                     ((GameplayActivity) hostActivity).loadAnswerFrag(selected.getText().toString(),
-                            curQuestion[5], correctAnswers + correctAddition, position, questionNumber);
+                            correctAnswer, correctAnswers + correctAddition, topic, questionNumber);
                 }
             }
         });

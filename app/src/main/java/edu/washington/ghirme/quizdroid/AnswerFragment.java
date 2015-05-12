@@ -14,7 +14,7 @@ public class AnswerFragment extends Fragment {
     private String userAnswer;
     private String correctAnswer;
     private int correctAnswerCount;
-    private int position;
+    private Topic topic;
     private int questionNumber;
     private Activity hostActivity;
 
@@ -26,7 +26,7 @@ public class AnswerFragment extends Fragment {
             userAnswer = getArguments().getString("userAnswer");
             correctAnswer = getArguments().getString("correctAnswer");
             correctAnswerCount = getArguments().getInt("correctAnswers");
-            position = getArguments().getInt("position");
+            topic = (Topic) getArguments().getSerializable("topic");
             questionNumber = getArguments().getInt("questionNumber");
         }
     }
@@ -40,8 +40,6 @@ public class AnswerFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_answer, container, false);
 
-        String[][] curTopicQuestions = Question.getQuestionsForPosition(position);
-
         // access text views and buttons on answer activity
         TextView userAnswerView = (TextView) rootView.findViewById(R.id.userAnswer);
         TextView correctAnswerView = (TextView) rootView.findViewById(R.id.correctAnswer);
@@ -52,7 +50,7 @@ public class AnswerFragment extends Fragment {
         userAnswerView.setText(userAnswer);
         correctAnswerView.setText(correctAnswer);
         score.setText(correctAnswerCount + " answers correct out of " + (questionNumber + 1));
-        final boolean finished = (questionNumber == curTopicQuestions.length - 1);
+        final boolean finished = (questionNumber == topic.getQuestions().size() - 1);
 
         if (finished) {
             next.setText("Finish");
@@ -67,7 +65,7 @@ public class AnswerFragment extends Fragment {
                         startActivity(i);
                     } else {
                         ((GameplayActivity) hostActivity).loadQuestionFrag(questionNumber + 1,
-                                correctAnswerCount, position);
+                                correctAnswerCount, topic);
                     }
                 }
             }

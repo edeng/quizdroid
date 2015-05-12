@@ -24,34 +24,27 @@ public class GameplayActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gameplay);
 
-        // Gets topic/description/questions from previous page
-        String topicName = getIntent().getStringExtra("topic");
-        String topicDescription = getIntent().getStringExtra("description");
-        int position = getIntent().getIntExtra("position", 0);
+        Bundle bundle = new Bundle();
+        bundle = getIntent().getExtras();
 
         FragmentManager fm = getFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
 
-        Bundle topicBundle = new Bundle();
-        topicBundle.putString("topicName", topicName);
-        topicBundle.putString("topicDescription", topicDescription);
-        topicBundle.putInt("position", position);
-
         OverviewFragment overviewFragment = new OverviewFragment();
-        overviewFragment.setArguments(topicBundle);
+        overviewFragment.setArguments(bundle);
 
         ft.add(R.id.container, overviewFragment);
         ft.commit();
     }
 
-    public void loadQuestionFrag(int questionNumber, int correctAnswers, int position) {
+    public void loadQuestionFrag(int questionNumber, int correctAnswers, Topic topic) {
         FragmentManager fm = getFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
 
         Bundle topicBundle = new Bundle();
         topicBundle.putInt("questionNumber", questionNumber);
         topicBundle.putInt("correctAnswers", correctAnswers);
-        topicBundle.putInt("position", position);
+        topicBundle.putSerializable("topic", topic);
 
         QuestionFragment questionFragment = new QuestionFragment();
         questionFragment.setArguments(topicBundle);
@@ -61,7 +54,7 @@ public class GameplayActivity extends ActionBarActivity {
     }
 
     public void loadAnswerFrag(String userAnswer, String correctAnswer, int correctAnswers,
-                               int position, int questionNumber) {
+                               Topic topic, int questionNumber) {
         FragmentManager fm = getFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
 
@@ -69,8 +62,8 @@ public class GameplayActivity extends ActionBarActivity {
         topicBundle.putString("userAnswer", userAnswer);
         topicBundle.putString("correctAnswer", correctAnswer);
         topicBundle.putInt("correctAnswers", correctAnswers);
-        topicBundle.putInt("position", position);
         topicBundle.putInt("questionNumber", questionNumber);
+        topicBundle.putSerializable("topic", topic);
 
         AnswerFragment answerFragment = new AnswerFragment();
         answerFragment.setArguments(topicBundle);
