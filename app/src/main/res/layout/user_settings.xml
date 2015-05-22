@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <PreferenceCategory android:title="Settings" >
+            <EditTextPreference
+                android:title="URL for Question Data"
+                android:summary="Enter the URL to retrieve question data"
+                android:key="jsonURL"/>
+        </PreferenceCategory>
+
+        <PreferenceCategory android:title="Settings" >
+            <EditTextPreference
+                android:defaultValue="15"
+                android:key="interval"
+                android:summary="Enter how often (in minutes) "
+                android:title="Update Intervals (minutes)" >
+            </EditTextPreference>
+        </PreferenceCategory>
+
+    </PreferenceScreen>
+</LinearLayout>
