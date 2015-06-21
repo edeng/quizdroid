@@ -1,0 +1,36 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".MainActivity">
+
+    <!--<Button-->
+        <!--android:id="@+id/buttonSettings"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_centerHorizontal="true"-->
+        <!--android:layout_marginTop="150dp"-->
+        <!--android:textSize="25dp"-->
+        <!--android:text="Settings" />-->
+
+
+    <!--<TextView-->
+        <!--android:id="@+id/textViewSettings"-->
+        <!--android:textSize="21dp"-->
+        <!--android:textColor="#0000FF"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_centerHorizontal="true"-->
+        <!--android:layout_below="@+id/buttonSettings"-->
+        <!--android:layout_marginTop="66dp"-->
+        <!--android:text="No Settings"-->
+        <!--android:textAppearance="?android:attr/textAppearanceMedium" />-->
+
+    <ListView
+        android:id="@+id/quizView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+    </ListView>
+
+</RelativeLayout>
